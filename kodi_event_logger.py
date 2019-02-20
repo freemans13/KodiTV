@@ -116,7 +116,7 @@ async def event_listener():
             if log is None or file_name != log.name:
                 if log:
                     log.close()
-                log = open(file_name, 'a')
+                log = open("event_logs/" + file_name, 'a')
 
             log.write(row + '\n')
             log.flush()
