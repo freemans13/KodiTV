@@ -8,7 +8,6 @@ import time
 import datetime
 import requests
 
-
 async def event_listener():
     async with websockets.connect('ws://127.0.0.1:9090/jsonrpc', ping_interval=None) as websocket:
         print('Kodi connected')
@@ -68,7 +67,7 @@ async def event_listener():
       "artistid",
       "albumid",
       "tvshowid",
-      "setid",
+      "setid",          
       "watchedepisodes",
       "disc",
       "tag",
@@ -103,11 +102,12 @@ async def event_listener():
       "displayorchestra",
       "displaylyricist",
       "userrating"]}}''')
-            event_data = None
+            event_data = '{}'
             if response.status_code == 200:
                 event_data = response.text
 
-            row = now.strftime("%Y-%m-%d %H:%M:%S") + event + event_data
+            # row = now.strftime("%Y-%m-%d %H:%M:%S") + event + event_data
+            row = '{"date": "' + now.strftime("%Y-%m-%d %H:%M:%S") + '", "event": ' + event + ', "item": ' + event_data + '}'
 
             week_start = now - datetime.timedelta(days=now.isoweekday() % 7)
             file_name = week_start.strftime("%Y-%m-%d") + ".txt"
@@ -120,6 +120,8 @@ async def event_listener():
 
             log.write(row + '\n')
             log.flush()
+
+
 
 while True:
     try:

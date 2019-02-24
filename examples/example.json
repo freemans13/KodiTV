@@ -1,0 +1,64 @@
+{
+    "date": "2019-02-21 19:32:57",
+    "event": {
+        "jsonrpc": "2.0",
+        "method": "Player.OnPlay",
+        "params": {
+            "data": {
+                "item": {
+                    "channeltype": "tv",
+                    "id": 18,
+                    "title": "Channel 5HD",
+                    "type": "channel"
+                },
+                "player": {
+                    "playerid": 1,
+                    "speed": 1
+                }
+            },
+            "sender": "xbmc"
+        }
+    },
+    "item": {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "result": {
+            "item": {
+                "art": {
+                    "thumb": "image://http%3a%2f%2ftv.team-freeman.com%3a9981%2fimagecache%2f4357/"
+                },
+                "cast": "",
+                "channel": "Channel 5HD",
+                "channelnumber": 6,
+                "channeltype": "tv",
+                "director": "",
+                "endtime": "2019-02-21 20:00:00",
+                "fanart": "",
+                "firstaired": "1970-01-01",
+                "genre": [
+                    "Music",
+                    "Ballet",
+                    "Dance"
+                ],
+                "hidden": false,
+                "id": 18,
+                "imdbnumber": "",
+                "label": "Channel 5HD",
+                "lastplayed": "2019-02-21",
+                "locked": false,
+                "originaltitle": "",
+                "plot": "Top-notch forensic science helps solve real crimes. Insects found on a decomposing body are used to track down a twisted killer who stuffed Edna Posey into a box to leave her to rot.",
+                "plotoutline": "",
+                "rating": 0,
+                "runtime": 30,
+                "starttime": "2019-02-21 19:30:00",
+                "thumbnail": "image://http%3a%2f%2ftv.team-freeman.com%3a9981%2fimagecache%2f4357/",
+                "title": "Medical Detectives",
+                "type": "channel",
+                "uniqueid": 265620597,
+                "writer": "",
+                "year": 0
+            }
+        }
+    }
+}
