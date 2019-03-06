@@ -20,7 +20,7 @@ async def event_listener():
 
             response = requests.get(
                 '''http://127.0.0.1:8080/jsonrpc?request={"jsonrpc":"2.0","id":1,"method":"Player.GetItem", "params":{"playerid":1,"properties":["title",
-      "artist",
+      "artist", 
       "albumartist",
       "genre",
       "year",
@@ -131,4 +131,7 @@ while True:
         time.sleep(5)
     except websockets.exceptions.ConnectionClosed:
         print('Kodi connection closed. Retry in 10 seconds')
+        time.sleep(10)
+    except requests.exceptions.ConnectionError:
+        print('Kodi connection aborted. Retry in 10 seconds')
         time.sleep(10)

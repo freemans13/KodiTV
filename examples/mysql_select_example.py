@@ -4,7 +4,7 @@ import mysql.connector
 connection = mysql.connector.connect(user='root', database='koditv')
 cursor = connection.cursor()
 
-query = ("SELECT date, title, channel, channelid FROM history "
+query = ("SELECT date, title, channel, channelid FROM shows "
          "WHERE date BETWEEN %s AND %s")
 
 start = datetime.date(2019, 2, 1)

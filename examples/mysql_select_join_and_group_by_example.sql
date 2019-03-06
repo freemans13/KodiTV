@@ -1,13 +1,20 @@
 -- http://www.mysqltutorial.org/mysql-inner-join.aspx
 select
-  h.show_id,
-  h.title,
-  g.genre
+  g.genre,
+  count(g.genre)
 from
   shows h
   inner join show_genre_map m on h.show_id = m.show_id
   inner join genres g on m.genre_id = g.genre_id
-order by
-  h.show_id,
-  h.title,
-  g.genre;
+group by g.genre
+order by 2 desc
+;
+
+select
+  channel,
+  count(channel)
+from
+  shows
+group by channel
+order by 2 desc
+;
