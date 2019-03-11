@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 # WS client example
-
+import parameters
 import asyncio
 import websockets
 import time
 import datetime
 import requests
 
+
 async def event_listener():
-    async with websockets.connect('ws://127.0.0.1:9090/jsonrpc', ping_interval=None) as websocket:
+    async with websockets.connect(parameters.KODI_WEBSOCKET_URL, ping_interval=None) as websocket:
         print('Kodi connected')
         await websocket.send('{"jsonrpc":"2.0","method":"JSONRPC.NotifyAll","params": { "sender": "tom", "message": "x" }}')
         log = None
@@ -19,7 +20,7 @@ async def event_listener():
             now = datetime.datetime.now()
 
             response = requests.get(
-                '''http://127.0.0.1:8080/jsonrpc?request={"jsonrpc":"2.0","id":1,"method":"Player.GetItem", "params":{"playerid":1,"properties":["title",
+                parameters.KODI_HTTP_URL + '''?request={"jsonrpc":"2.0","id":1,"method":"Player.GetItem", "params":{"playerid":1,"properties":["title",
       "artist", 
       "albumartist",
       "genre",
@@ -132,6 +133,6 @@ while True:
     except websockets.exceptions.ConnectionClosed:
         print('Kodi connection closed. Retry in 10 seconds')
         time.sleep(10)
-    except requests.exceptions.ConnectionError:
-        print('Kodi connection aborted. Retry in 10 seconds')
-        time.sleep(10)
+    # except requests.exceptions.ConnectionError as e:
+    #     print('Kodi connection aborted. Retry in 10 seconds', e)
+    #     time.sleep(10)

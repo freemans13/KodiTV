@@ -11,3 +11,11 @@ order by
   h.show_id,
   h.title,
   g.genre;
+
+select
+  g.genre,
+  count(m.genre_id)
+from genres g
+    inner join show_genre_map m on g.genre_id = m.genre_id
+group by genre
+order by 2 desc;

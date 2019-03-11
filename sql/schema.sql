@@ -3,6 +3,7 @@ create table shows (
   date datetime not null,
   title varchar(255) not null unique,
   channel varchar(255),
+  channel_number int not null,
   constraint shows_pk primary key (show_ID)
 );
 create table genres (
@@ -27,6 +28,7 @@ create table episodes (
   show_ID int not null,
   season int not null,
   episode int not null,
-  constraint shows_pk primary key (show_ID, season, episode)
+  plot varchar(255),
+  constraint shows_pk primary key (show_ID, season, episode, plot)
 );
 
