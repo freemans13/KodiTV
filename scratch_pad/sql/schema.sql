@@ -31,4 +31,8 @@ create table episodes (
   plot varchar(255),
   constraint shows_pk primary key (show_ID, season, episode, plot)
 );
+create table dislikes (
+  show_ID int not null,
+  constraint dislikes_pk primary key (show_ID)
+);
 

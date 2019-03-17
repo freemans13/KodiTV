@@ -1,26 +1,23 @@
 import mysql.connector
 import datetime
-from read_logs import read_logs
-from series_info import series_info
+from src.utils.read_logs import read_logs
+from src.utils.series_info import series_info
+import os
+from src.utils.find_show_id import find_show_id
+
 
 def processor(connection, cursor, log_dict):
     if 'error' in log_dict['item']:
         return
 
-    item = log_dict['item']['result']['item']
+    item = log_dict['item']
     if 'channel' not in item:
         print('missing channel?', item)
         return
 
     add_shows_record = ("INSERT INTO shows "
-                          "(date, title, channel, channel_number) "
-                          "VALUES (%s, %s, %s, %s)")
-
-    find_show_record = ("SELECT show_ID "
-                        "FROM shows "
-                        "WHERE title = %s")
-
-    show_id = 0
+                        "(date, title, channel, channel_number) "
+                        "VALUES (%s, %s, %s, %s)")
 
     try:
 
@@ -37,10 +34,7 @@ def processor(connection, cursor, log_dict):
         show_id = cursor.lastrowid
 
     except mysql.connector.errors.IntegrityError as e:
-        cursor.execute(find_show_record, (item['title'], ))
-        for (ID,) in cursor:
-            show_id = ID
-
+        show_id = find_show_id(item['title'], cursor)
 
     add_genre_record = ("INSERT INTO genres "
                         "(genre)"
@@ -63,14 +57,14 @@ def processor(connection, cursor, log_dict):
         genre_id = 0
         try:
             # Insert new genre record
-            cursor.execute(add_genre_record, (genre, ))
+            cursor.execute(add_genre_record, (genre,))
             # lastrow returns last given auto increment value
             genre_id = cursor.lastrowid
 
         except mysql.connector.errors.IntegrityError as e:
             # find id of the duplicate genre, where the genre is already listed go through all other genres.
             # print('Error:', e)
-            cursor.execute(select_from_genre, (genre, ))
+            cursor.execute(select_from_genre, (genre,))
             for (ID,) in cursor:
                 genre_id = ID
 
@@ -95,4 +89,4 @@ def processor(connection, cursor, log_dict):
     connection.commit()
 
 
-read_logs(processor)
+read_logs(processor, os.path.basename(__file__))

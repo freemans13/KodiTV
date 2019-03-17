@@ -1,0 +1,93 @@
+{
+  "date": "2019-03-15 21:07:16",
+  "event": {
+    "jsonrpc": "2.0",
+    "method": "Player.OnResume",
+    "params": {
+      "data": {
+        "item": {
+          "title": "The Mentalist",
+          "type": "movie"
+        },
+        "player": {
+          "playerid": -1,
+          "speed": 1
+        }
+      },
+      "sender": "xbmc"
+    }
+  },
+  "item": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+      "item": {
+        "album": "",
+        "art": {
+          "icon": "image://http%3a%2f%2fstu%3an3wj0b%40tv.team-freeman.com%3a9981%2fimagecache%2f4517/"
+        },
+        "artist": [],
+        "cast": [],
+        "channel": "YourTV",
+        "country": [],
+        "dateadded": "",
+        "director": [],
+        "endtime": "2019-03-14 00:10:00",
+        "episode": 4,
+        "episodeguide": "",
+        "fanart": "",
+        "file": "pvr://recordings/tv/active/The%20Mentalist s01e04, TV%20(YourTV), 20190313_225800, 210098250.pvr",
+        "firstaired": "",
+        "genre": [
+          "Movie",
+          "Drama"
+        ],
+        "id": 866,
+        "imdbnumber": "",
+        "label": "The Mentalist",
+        "lastplayed": "",
+        "mpaa": "",
+        "originaltitle": "",
+        "playcount": 0,
+        "plot": "Ladies in Red: A wealthy banker is found murdered inside his locked safe room. Patrick Jane sets up a mental conundrum to see which of the suspects will show their true colours. (S1 Ep4)",
+        "plotoutline": "",
+        "premiered": "",
+        "productioncode": "",
+        "rating": 0.0,
+        "resume": {
+          "position": 0.0,
+          "total": 4320.0
+        },
+        "runtime": 4320,
+        "season": 1,
+        "set": "",
+        "setid": -1,
+        "showlink": [],
+        "showtitle": "",
+        "sorttitle": "",
+        "specialsortepisode": -1,
+        "specialsortseason": -1,
+        "starttime": "2019-03-13 22:58:00",
+        "streamdetails": {
+          "audio": [],
+          "subtitle": [],
+          "video": []
+        },
+        "studio": [],
+        "tag": [],
+        "tagline": "",
+        "thumbnail": "",
+        "title": "The Mentalist",
+        "top250": 0,
+        "track": -1,
+        "trailer": "",
+        "tvshowid": -1,
+        "type": "unknown",
+        "userrating": 0,
+        "votes": "0",
+        "writer": [],
+        "year": 1969
+      }
+    }
+  }
+}

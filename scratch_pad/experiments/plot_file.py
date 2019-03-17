@@ -1,17 +1,16 @@
 import requests
-import parameters
+from src import parameters
 import json
 
 
 r = requests.get(parameters.KODI_HTTP_URL + '''?request={"jsonrpc":"2.0","id":1,"method":"PVR.GetChannels","params":{
 "channelgroupid":"alltv"}}''')
 
-response = r.text
-channels = json.loads(response)
+channels = r.json()
 for channel in channels['result']['channels']:
     channel_number = channel['channelid']
 
-    r = requests.get( parameters.KODI_HTTP_URL + '''?request={"jsonrpc":"2.0","id":1,"method":"PVR.GetBroadcasts","params":{
+    r = requests.get(parameters.KODI_HTTP_URL + '''?request={"jsonrpc":"2.0","id":1,"method":"PVR.GetBroadcasts","params":{
         "channelid":''' + str(channel_number) + ''',"properties":[
         "title",
         "plot",
@@ -21,9 +20,8 @@ for channel in channels['result']['channels']:
         ]}}''')
 
     if r.status_code == 200:
-        broadcast_details = r.text
         print(r.text)
-        broadcast_details_json = json.loads(broadcast_details)
+        broadcast_details_json = r.json()
         for broadcast in broadcast_details_json['result']['broadcasts']:
             print(broadcast['plot'])
 

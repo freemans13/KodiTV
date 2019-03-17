@@ -1,0 +1,87 @@
+{
+  "date": "2019-03-15 21:03:35",
+  "event": {
+    "jsonrpc": "2.0",
+    "method": "VideoLibrary.OnUpdate",
+    "params": {
+      "data": {
+        "id": -1,
+        "type": ""
+      },
+      "sender": "xbmc"
+    }
+  },
+  "item": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+      "item": {
+        "album": "",
+        "art": {
+          "icon": "image://http%3a%2f%2fstu%3an3wj0b%40tv.team-freeman.com%3a9981%2fimagecache%2f4422/"
+        },
+        "artist": [],
+        "cast": [],
+        "channel": "ITV2",
+        "country": [],
+        "dateadded": "",
+        "director": [],
+        "endtime": "2019-03-13 23:25:00",
+        "episode": 0,
+        "episodeguide": "",
+        "fanart": "",
+        "file": "pvr://recordings/tv/active/2%20Fast%202%20Furious, TV%20(ITV2), 20190313_220300, 223961451.pvr",
+        "firstaired": "",
+        "genre": [
+          "Movie",
+          "Drama"
+        ],
+        "id": 488,
+        "imdbnumber": "",
+        "label": "2 Fast 2 Furious",
+        "lastplayed": "",
+        "mpaa": "",
+        "originaltitle": "",
+        "playcount": 0,
+        "plot": "Action sequel starring Paul Walker and Eva Mendes, 2003. A disgraced cop is called upon to bring down a drugs lord with the help of a childhood friend who is now a street racer.",
+        "plotoutline": "",
+        "premiered": "",
+        "productioncode": "",
+        "rating": 0.0,
+        "resume": {
+          "position": 0.0,
+          "total": 4920.0
+        },
+        "runtime": 4920,
+        "season": 0,
+        "set": "",
+        "setid": -1,
+        "showlink": [],
+        "showtitle": "",
+        "sorttitle": "",
+        "specialsortepisode": -1,
+        "specialsortseason": -1,
+        "starttime": "2019-03-13 22:03:00",
+        "streamdetails": {
+          "audio": [],
+          "subtitle": [],
+          "video": []
+        },
+        "studio": [],
+        "tag": [],
+        "tagline": "",
+        "thumbnail": "",
+        "title": "2 Fast 2 Furious",
+        "top250": 0,
+        "track": -1,
+        "trailer": "",
+        "tvshowid": -1,
+        "type": "unknown",
+        "userrating": 0,
+        "votes": "0",
+        "writer": [],
+        "year": 1969
+      }
+    }
+  }
+}

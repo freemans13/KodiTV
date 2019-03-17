@@ -4,13 +4,13 @@ import time
 from pygtail import Pygtail
 import os
 
-def read_logs(line_processor):
+def read_logs(line_processor, offset_name):
     txt_files = []
     file_name = ""
     while True:
         if len(txt_files) == 0:
             # see https://stackoverflow.com/questions/5640630/array-filter-in-python
-            txt_files = [entry for entry in os.listdir("event_logs/") if entry.endswith('.txt')]
+            txt_files = [entry for entry in os.listdir("../../event_logs/") if entry.endswith('.txt')]
             txt_files.sort()
             if file_name != "":
                 # we know the last file_name we processed - no point re-loading older files
@@ -26,7 +26,8 @@ def read_logs(line_processor):
             connection = mysql.connector.connect(user='root', database='koditv')
             cursor = connection.cursor()
 
-            for line in Pygtail("event_logs/" + file_name, offset_file="event_logs/" + file_name + "." + os.path.basename(__file__) + ".offset"):
+            for line in Pygtail("../../event_logs/" + file_name, offset_file="../../event_logs/" + file_name + "." + offset_name + ".offset"):
+                print(line)
                 log_dict = json.loads(line)
                 line_processor(connection, cursor, log_dict)
 

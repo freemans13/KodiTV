@@ -1,0 +1,90 @@
+{
+  "date": "2019-03-15 20:58:28",
+  "event": {
+    "jsonrpc": "2.0",
+    "method": "Player.OnStop",
+    "params": {
+      "data": {
+        "end": true,
+        "item": {
+          "title": "The Mentalist",
+          "type": "movie"
+        }
+      },
+      "sender": "xbmc"
+    }
+  },
+  "item": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+      "item": {
+        "album": "",
+        "art": {
+          "icon": "image://http%3a%2f%2fstu%3an3wj0b%40tv.team-freeman.com%3a9981%2fimagecache%2f4517/"
+        },
+        "artist": [],
+        "cast": [],
+        "channel": "YourTV",
+        "country": [],
+        "dateadded": "",
+        "director": [],
+        "endtime": "2019-03-15 00:10:00",
+        "episode": 0,
+        "episodeguide": "",
+        "fanart": "",
+        "file": "pvr://recordings/tv/active/The%20Mentalist, TV%20(YourTV), 20190314_225800, 930635165.pvr",
+        "firstaired": "",
+        "genre": [
+          "Movie",
+          "Drama"
+        ],
+        "id": 331,
+        "imdbnumber": "",
+        "label": "The Mentalist",
+        "lastplayed": "",
+        "mpaa": "",
+        "originaltitle": "",
+        "playcount": 1,
+        "plot": "Red-Handed: While investigating the case of a murdered casino owner, Patrick Jane uses his mentalist skills to ultimately entrap the killer - and win big at the card tables. (S1 Ep6)",
+        "plotoutline": "",
+        "premiered": "",
+        "productioncode": "",
+        "rating": 0.0,
+        "resume": {
+          "position": -1.0,
+          "total": 0.0
+        },
+        "runtime": 4320,
+        "season": 0,
+        "set": "",
+        "setid": -1,
+        "showlink": [],
+        "showtitle": "",
+        "sorttitle": "",
+        "specialsortepisode": -1,
+        "specialsortseason": -1,
+        "starttime": "2019-03-14 22:58:00",
+        "streamdetails": {
+          "audio": [],
+          "subtitle": [],
+          "video": []
+        },
+        "studio": [],
+        "tag": [],
+        "tagline": "",
+        "thumbnail": "",
+        "title": "The Mentalist",
+        "top250": 0,
+        "track": -1,
+        "trailer": "",
+        "tvshowid": -1,
+        "type": "unknown",
+        "userrating": 0,
+        "votes": "0",
+        "writer": [],
+        "year": 1969
+      }
+    }
+  }
+}

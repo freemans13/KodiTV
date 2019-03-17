@@ -1,5 +1,5 @@
 import requests
-import parameters
+from src import parameters
 
 r = requests.post(parameters.KODI_HTTP_URL, json={"jsonrpc": "2.0", "id": 1, "method": "Player.Open", "params":
                  {"item": {"channelid": 147}}})
