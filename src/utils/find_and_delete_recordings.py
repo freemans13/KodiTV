@@ -8,34 +8,28 @@ def find_and_delete_recordings(title, end_real=None, plot=None):
         print('No title specified. Cannot delete recordings')
         return
 
-    search_filter = '''[
-                {
-                    "field" : "disp_title",
-                    "type"  : "string",
-                    "value" : "''' + title + '''"
-                 }'''
+    search_filter = [{
+        "field": "disp_title",
+        "type": "string",
+        "value": title
+    }]
     if end_real:
-        search_filter += ''',{
-                    "field" : "stop_real",
-                    "type"  : "numeric",
-                    "value" : ''' + str(end_real) + ''',
-                    "comparison"  : "eq"
-                 }
-                '''
-    # limition: tvh doesn't filter by plot when the descriptipn contains [ or ]!!!!!
+        search_filter.append({
+            "field": "stop_real",
+            "type": "numeric",
+            "value": end_real,
+            "comparison": "eq"
+        })
+    # # limitation: tvh doesn't filter by plot when the description contains [ or ]!!!!!
     # if plot:
-    #     search_filter += ''',{
-    #                 "field" : "disp_description",
-    #                 "type"  : "string",
-    #                 "value" : "''' + plot + '''"
-    #              }
-    #             '''
-    search_filter += ']'
+    #     search_filter.append({
+    #         "field": "disp_description",
+    #         "type": "string",
+    #         "value": plot
+    #     })
 
-    print(search_filter)
-    r = requests.get(parameters.TVHEADEND_URL + '/dvr/entry/grid?filter=' + search_filter)
+    r = requests.get(parameters.TVHEADEND_URL + '/dvr/entry/grid?filter=' + json.dumps(search_filter))
     response = r.json()
-    print(r.text)
     for entry in response['entries']:
         uuid = entry['uuid']
         if entry['disp_title'] != title:
@@ -43,7 +37,6 @@ def find_and_delete_recordings(title, end_real=None, plot=None):
         elif plot and plot != entry['disp_description']:
             print("good title, wrong plot")
         else:
-            print("deleting : ", title, uuid)
+            print("Deleting : ", title, uuid)
             r = requests.post(parameters.TVHEADEND_URL + '/dvr/entry/remove',
-                          data={"uuid": uuid})
-            print(r.status_code, r.text)
+                              data={"uuid": uuid})

@@ -1,6 +1,6 @@
 from datetime import datetime
 import os
-from src.utils.read_logs import read_logs
+from src.utils.EventLogReader import EventLogReader
 from src.commands.play_recommendation import play_something
 from src.utils.find_and_delete_recordings import find_and_delete_recordings
 
@@ -8,24 +8,26 @@ from src.utils.find_and_delete_recordings import find_and_delete_recordings
 # documentation on TvHeadend's WebAPI  https://github.com/dave-p/TVH-API-docs/wiki/Dvr
 
 
-def processor(connection, cursor, log_dict):
-    if log_dict['event']['method'] == "Player.OnStop" or log_dict['event']['method'] == "VideoLibrary.OnUpdate":
-        if log_dict['item']['resume']['position'] == -1:
+class DeleteFinishedRecordings(EventLogReader):
+    def on_event(self, event_dict):
+        if event_dict['event']['method'] == "Player.OnStop" or event_dict['event']['method'] == "VideoLibrary.OnUpdate":
+            if event_dict['item']['resume']['position'] == -1:
 
-            if 'starttime' not in log_dict['item']:
-                print('starttime not found :(')
-            else:
-                title = log_dict['item']['label']
-                start = log_dict['item']['starttime']
-                end = log_dict['item']['endtime']
-                print("deleted recording", title, start, end)
+                if 'starttime' not in event_dict['item']:
+                    print('starttime not found :(')
+                else:
+                    title = event_dict['item']['label']
+                    start = event_dict['item']['starttime']
+                    end = event_dict['item']['endtime']
+                    print("---\nAttempting to delete recording", title, start, end)
 
-                os.environ['TZ'] = 'Europe/London'
-                end_real = datetime.strptime(end + " BST", "%Y-%m-%d %H:%M:%S %Z").timestamp()
+                    os.environ['TZ'] = 'Europe/London'
+                    end_real = datetime.strptime(end + " BST", "%Y-%m-%d %H:%M:%S %Z").timestamp()
 
-                find_and_delete_recordings(title, end_real=end_real)
+                    find_and_delete_recordings(title, end_real=end_real)
 
-                play_something()
+                    play_something()
 
 
-read_logs(processor, os.path.basename(__file__))
+reader = DeleteFinishedRecordings(os.path.basename(__file__))
+reader.start()

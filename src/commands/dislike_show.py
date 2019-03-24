@@ -1,35 +1,31 @@
 import mysql.connector
-from src.utils.find_show_id import find_show_id
 from src.utils.find_and_delete_recordings import find_and_delete_recordings
-from src.utils import timer
+from src.utils.TimerManager import TimerManager
 from src.utils.KodiResource import KodiResource
+import src.parameters as parameters
 
 
 def dislike_show():
-    connection = mysql.connector.connect(user='root', database='koditv')
+    connection = mysql.connector.connect(user=parameters.DB_USER, database=parameters.DB_NAME)
     cursor = connection.cursor()
 
     kodi = KodiResource()
     item_dict = kodi.player_get_item()
 
-    add_dislikes_record = ("INSERT INTO dislikes "
-                           "(show_ID)"
-                           "VALUES (%s)")
+    update_shows_with_dislikes = ("UPDATE shows "
+                                  "SET disliked = 1 "
+                                  "WHERE title = %s")
 
     title = item_dict['title']
-    show_id = find_show_id(title, cursor)
 
-    if show_id:
-        try:
-            cursor.execute(add_dislikes_record, (show_id,))
-        except mysql.connector.errors.IntegrityError:
-            pass
+    cursor.execute(update_shows_with_dislikes, (title,))
     connection.commit()
 
     find_and_delete_recordings(title)
     print(title)
 
-    timer_ids = timer.find_timer_ids(title, kodi)
+    timer = TimerManager()
+    timer_ids = timer.find_timer_ids(title)
     if len(timer_ids) > 0:
         print("deleting : ", title)
-        timer.delete_timers(timer_ids, kodi)
+        timer.delete_timers(timer_ids)

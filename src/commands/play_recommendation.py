@@ -1,16 +1,13 @@
 from threading import Timer
-import requests
-import json
-from src import parameters
 import mysql.connector
 from src.utils.series_info import series_info
 from src.utils.find_and_delete_recordings import find_and_delete_recordings
-from pprint import pprint
 from src.utils.KodiResource import KodiResource
+import src.parameters as parameters
 
 
 def play_something(title=None):
-    connection = mysql.connector.connect(user='root', database='koditv')
+    connection = mysql.connector.connect(user=parameters.DB_USER, database=parameters.DB_NAME)
     cursor = connection.cursor()
 
     select_season_info = ("select s.show_id, e.season, max(e.episode) last_episode "
@@ -33,41 +30,38 @@ def play_something(title=None):
     player_recording = None
     recording_ids = []
     if next_episode > 0:
-        print("check for new episode")
+        print("Check for new episode...")
         for record in record_dict:
             # print(record)
             if record['label'].lower() == title.lower():
                 # print(record['label'], record['recordingid'])
                 recording_ids.append(record['recordingid'])
         record_details_dict = kodi.pvr_get_recording_details_batch(recording_ids)
-        # print(record_details_dict)
-        print("are recordings for current show unwatched")
 
         for line in record_details_dict:
             episode_dict = series_info(line['plot'])
-            print(episode_dict)
 
             if episode_dict['episode'] < next_episode - 2:
                 find_and_delete_recordings(line['label'], plot=line['plot'])
 
             if episode_dict['episode'] == next_episode - 1 and line['resume']['position'] > 0:
-                print("resume current episode", next_episode - 1)
+                print("Resume current episode", next_episode - 1)
                 player_recording = {"id": line['recordingid'], "title": line['label']}
                 resume_current = True
 
             if episode_dict['episode'] == next_episode:
-                print("found next episode", next_episode)
+                print("Found next episode", next_episode)
                 player_recording = {"id": line['recordingid'], "title": line['label']}
 
         if not player_recording:
-            print("no unwatched future episodes")
+            print("No unwatched future episodes")
 
     if not player_recording and len(record_dict) > 0:
         # for recording in record_dict:
         player_recording = {"id": record_dict[0]['recordingid'],
                             "title": record_dict[0]['label']}
     if player_recording:
-        print('playing', player_recording['title'])
+        print('Playing', player_recording['title'])
         if resume_current:
             # Kodi asks user if they want to start from beginning or to resume, by default it highlights the resume
             # option, therefore we want send a post to "select" current choice. This is my hack for getting around

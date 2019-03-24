@@ -8,7 +8,7 @@ import time
 import datetime
 import json
 from src.utils.KodiResource import KodiResource
-
+import src.parameters as parameters
 
 async def event_listener():
     async with websockets.connect(parameters.KODI_WEBSOCKET_URL, ping_interval=None) as websocket:
@@ -35,7 +35,7 @@ async def event_listener():
             if log is None or file_name != log.name:
                 if log:
                     log.close()
-                log = open("../event_logs/" + file_name, 'a')
+                log = open(parameters.EVENT_LOG_PATH + file_name, 'a')
 
             log.write(row + '\n')
             log.flush()
