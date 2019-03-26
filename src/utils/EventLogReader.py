@@ -6,15 +6,28 @@ import src.parameters as parameters
 
 
 class EventLogReader:
+    """
+    This is a base class
+    any class that extends this class must override the on-event method
+
+    reads the log file line-by-line, for every line calls on_event method
+    when we get to the end of a file, we look for the next file.
+    If we cant find a new file we wait 5 seconds and look again
+
+    """
     def __init__(self, offset_name):
         self.offset_name = offset_name
 
     def start(self):
+        """
+        Start reading files and for every line read call on-event method
+
+        :return: None
+        """
         txt_files = []
         file_name = ""
         while True:
             if len(txt_files) == 0:
-                # see https://stackoverflow.com/questions/5640630/array-filter-in-python
                 txt_files = []
                 for entry in os.listdir(parameters.EVENT_LOG_PATH):
                     # only interested in .txt files

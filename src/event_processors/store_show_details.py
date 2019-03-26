@@ -8,11 +8,27 @@ from src.utils.DatabaseResource import DatabaseResource
 
 
 class StoreShowDetails(EventLogReader):
+    """
+    Store the information of the currently played item, i.e.
+    . episode number
+    . season number
+    . plot
+    . channel
+    . genre
+    etc
+    """
+
     def __init__(self, offset_filename):
         super(StoreShowDetails, self).__init__(offset_filename)
         self.db = DatabaseResource()
 
     def on_event(self, event_dict):
+        """
+        While ensuring there are no null values we input relevant information into its corresponding field.
+
+        :param event_dict: Contains 3 elements; date, event, item
+        :return: None
+        """
         if event_dict['item'] is None:
             return
         if 'error' in event_dict['item']:
@@ -70,6 +86,7 @@ class StoreShowDetails(EventLogReader):
             print('Inserted new Shows record show_ID:%s %s' % (show_id, data))
 
         except mysql.connector.errors.IntegrityError:
+            # exception for: when the row already exists in the table (duplication)
             show_id = find_show_id(item['title'], self.db.cursor)
             print('Show "%s" already exists; show_ID %s' % (item['title'], show_id))
 
@@ -85,6 +102,7 @@ class StoreShowDetails(EventLogReader):
                 print('Inserted new Genres record genre_ID:%s %s' % (genre_id, genre))
 
             except mysql.connector.errors.IntegrityError:
+                # exception for: when genre already exists so new genre map reference for that genre will be made
                 # find id of the duplicate genre
                 self.db.cursor.execute(find_genre_id_sql, (genre,))
                 for (ID,) in self.db.cursor:
@@ -95,6 +113,8 @@ class StoreShowDetails(EventLogReader):
                 self.db.cursor.execute(insert_map_sql, (genre_id, show_id))
                 print('Inserted new Shows_Genres_Map record genre_ID:%s show_ID:%s' % (genre_id, show_id))
             except mysql.connector.errors.IntegrityError:
+                # exception for: when a map already exists, can be ignored as the information already exists
+                # (duplication)
                 pass
 
             plot = item['plot']
@@ -105,6 +125,8 @@ class StoreShowDetails(EventLogReader):
                 self.db.cursor.execute(insert_episode_sql, (show_id, season, episode, plot))
                 print('Inserted new Episodes record show_ID:%s S%sE%s %s' % (show_id, season, episode, plot))
             except mysql.connector.errors.IntegrityError:
+                # exception for: when a season + episode already exists for show,
+                # can be ignored as the information already exists (duplication)
                 pass
 
         channel_id = 0
@@ -116,7 +138,7 @@ class StoreShowDetails(EventLogReader):
             channel_id = self.db.cursor.lastrowid
             print('Inserted new channels record channel_ID:%s %s' % (channel_id, channel))
 
-        except mysql.connector.errors.IntegrityError as e:
+        except mysql.connector.errors.IntegrityError:
             # find id of the duplicate channel
             self.db.cursor.execute(find_channel_id_sql, (channel,))
             for (ID,) in self.db.cursor:
@@ -127,6 +149,8 @@ class StoreShowDetails(EventLogReader):
             self.db.cursor.execute(insert_show_channel_map_sql, (channel_id, show_id))
             print('Inserted new show_channel_map record channel_ID:%s show_ID:%s' % (channel_id, show_id))
         except mysql.connector.errors.IntegrityError:
+            # exception for: when a channel map already exists, can be ignored as the information already exists
+            # (duplication)
             pass
 
         # Make sure data is committed to the database

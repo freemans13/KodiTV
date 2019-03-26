@@ -1,11 +1,22 @@
 import mysql.connector
-from src.utils.find_and_delete_recordings import find_and_delete_recordings
+from src.utils.TvHeadEndResource import TvHeadEndResource
 from src.utils.TimerManager import TimerManager
 from src.utils.KodiResource import KodiResource
 import src.parameters as parameters
 
 
 def dislike_show():
+    """
+    Marks a shows as 'disliked'. This method takes several steps:
+    1) asks Kodi what is being watched
+    2) searches the Shows table for the same show
+    3) updates the Show record with disliked = 1
+    4) delete all recordings of the show
+    5) delete any timers associated with the show
+
+    :return:
+            None
+    """
     connection = mysql.connector.connect(user=parameters.DB_USER, database=parameters.DB_NAME)
     cursor = connection.cursor()
 
@@ -21,7 +32,8 @@ def dislike_show():
     cursor.execute(update_shows_with_dislikes, (title,))
     connection.commit()
 
-    find_and_delete_recordings(title)
+    tv = TvHeadEndResource()
+    tv.find_and_delete_recordings(title)
     print(title)
 
     timer = TimerManager()

@@ -2,6 +2,13 @@ import re
 
 
 def series_info(line):
+    """
+    find the episode and season information in the plot
+
+    :param line: plot to be processed
+
+    :return: season and episode numbers
+    """
     patterns = [
         r'(?ix)(?:s|^)\s*(\d{1,3})\s*(?:e|ep|^)\s*(\d{1,3})',
         r'(?ix)(\d{1,3})/(\d{1,3})',

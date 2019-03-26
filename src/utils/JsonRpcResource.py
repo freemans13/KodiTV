@@ -5,11 +5,25 @@ from pprint import pprint
 
 
 class JsonRpcResource:
+    """
+    This is a bass class, to make JSON-RPC requests, and receive JSON-RPC responses.
+
+    refer to  https://kodi.wiki/view/JSON-RPC_API/v9
+    """
     def __init__(self):
         self.http_url = parameters.KODI_HTTP_URL
         self.web_socket_url = parameters.KODI_WEBSOCKET_URL
 
     def get(self, method, params, response_key=''):
+        """
+        manages get requests
+
+        :param1 method: JSON-RPC method. e.g. PVR.GetRecordings
+        :param2 params: Specific to the method what data you want returned
+        :param3 response_key: Rather than return entire response only return relevant information
+
+        :return: Response_Key or None or Response
+        """
         request = {
             "jsonrpc": "2.0",
             "id": 1,
@@ -34,6 +48,14 @@ class JsonRpcResource:
         return None
 
     def post(self, method, params):
+        """
+        manages post requests
+
+        :param method: JSON-RPC method. e.g. Player.Open
+        :param params: Specific to the method
+
+        :return: None
+        """
         requests.post(self.http_url,
                       json={"jsonrpc": "2.0",
                             "id": 1,

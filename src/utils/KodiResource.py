@@ -3,8 +3,21 @@ from src.utils.JsonRpcResource import JsonRpcResource
 
 
 class KodiResource(JsonRpcResource):
+    """
+    This class extends the JsonRpcResource base class.
+    This lists all Kodi requests
+    Any request we want to make to kodi is made through this class
+
+    """
 
     def pvr_get_channel_details(self, channel_id):
+        """
+        Gives channel details for a broadcast
+
+        :param channel_id: channel we want details on
+
+        :return: ^
+        """
         return self.get('PVR.GetChannelDetails',
                         {
                             'channelid': channel_id,
@@ -13,6 +26,11 @@ class KodiResource(JsonRpcResource):
                         "channeldetails")
 
     def pvr_get_channels(self):
+        """
+        gets list of all channels
+
+        :return: ^
+        """
         return self.get('PVR.GetChannels',
                         {
                             "channelgroupid": "alltv"
@@ -20,6 +38,13 @@ class KodiResource(JsonRpcResource):
                         'channels')
 
     def pvr_get_broadcasts(self, channel_id):
+        """
+        gets list of all broadcasts
+
+        :param channel_id: channel we want details on
+
+        :return: ^
+        """
         return self.get('PVR.GetBroadcasts',
                         {
                             "channelid": channel_id,
@@ -58,6 +83,11 @@ class KodiResource(JsonRpcResource):
                         'broadcasts')
 
     def player_get_item(self):
+        """
+        details of current show
+
+        :return: ^
+        """
         return self.get("Player.GetItem",
                         {"playerid": 1, "properties": ["title",
                                                        "artist",
@@ -145,6 +175,14 @@ class KodiResource(JsonRpcResource):
                         'item')
 
     def pvr_get_recording_details_batch(self, recording_ids):
+        """
+        through a certain few recordings in reocrdings list (its own request) get
+        (through another request) details of the recordings
+
+        :param recording_ids: uid for a recording
+
+        :return: recordings details for relevant recordings
+        """
         recordings_same_name = []
         for record_id in recording_ids:
             recordings_same_name.append(
@@ -192,24 +230,65 @@ class KodiResource(JsonRpcResource):
         return []
 
     def pvr_get_recordings(self):
+        """
+        gets list of recordings
+
+        :return:^
+        """
         return self.get("PVR.GetRecordings", {}, 'recordings')
 
     def player_stop(self):
+        """
+        stops the Kodi player (show)
+
+        :return: Kodi response
+        """
         self.post("Player.Stop", {"playerid": 1})
 
     def player_open(self, rec_to_post):
+        """
+        opens kodi player, and watches ...
+
+        :param rec_to_post: the uid of the recording to be watched
+
+        :return: Kodi response
+        """
         self.post("Player.Open", {"item": {"recordingid": rec_to_post}})
         print("Player opened successfully ")
 
     def input_select(self):
+        """
+        simulates pressing the "okay" button
+
+        :return: Kodi response
+        """
         print("resume")
         self.post("Input.Select", {})
 
     def pvr_add_timer(self, broadcast_id):
+        """
+        adds a time for the current broadcast
+
+        :param broadcast_id: the uid of the current broadcast
+
+        :return: Kodi response
+        """
         self.post("PVR.AddTimer", {"broadcastid": broadcast_id, "timerrule": True})
 
     def pvr_get_timers(self):
+        """
+        gets a list of all timers
+
+        :return: ^
+        """
         return self.get("PVR.GetTimers", {"properties": []}, "timers")
 
     def pvr_delete_timer(self, timer_id):
+        """
+        deletes the timer with ... uid
+
+        :param timer_id: uid for the timer
+
+        :return: Kodi response
+        """
         self.post("PVR.DeleteTimer", {"timerid": timer_id})

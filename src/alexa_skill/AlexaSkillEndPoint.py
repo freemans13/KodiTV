@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from src.commands.play_recommendation import play_something
+from src.commands.play_something import play_something
 import json
 from src.commands.dislike_show import dislike_show
 import time
@@ -9,8 +9,22 @@ import src.parameters as parameters
 
 
 class AlexaSkillEndPoint(BaseHTTPRequestHandler):
+    """
+    This is the alexa skill endpoint, all alexa intents are sent to this endpoint.
+    This is the simplest implementation based on an example from;
+    https://hashnode.com/post/building-a-simple-rest-api-in-python-using-no-outside-dependencies-cin8g3t6100ducw53wrb1qeu5
+    """
 
-    def send_response(self, text):
+    def send_alexa_response(self, text):
+        """
+        Send formatted alexa response
+
+        :param text:
+                Sentence for alexa to say in response
+        :return:
+                None
+        """
+
         # send HTTP status code for success
         self.send_response(200)
 
@@ -31,6 +45,15 @@ class AlexaSkillEndPoint(BaseHTTPRequestHandler):
         return
 
     def do_POST(self):
+        """
+        receiving POST request from alexa skill
+
+        managing intents
+
+        :return:
+                None
+        """
+
         print('do_POST')
 
         # read request BODY
@@ -52,7 +75,7 @@ class AlexaSkillEndPoint(BaseHTTPRequestHandler):
         if intent == "play":
             title = play_something()
 
-            self.send_response("will do, playing %s" % title)
+            self.send_alexa_response("will do, playing %s" % title)
             return
 
         if intent == "dislike":
@@ -61,13 +84,13 @@ class AlexaSkillEndPoint(BaseHTTPRequestHandler):
             # time.sleep(parameters.DELAY)
             title = play_something()
 
-            self.send_response("yeah i agree, I don't like it either, playing %s" % title)
+            self.send_alexa_response("yeah i agree, I don't like it either, playing %s" % title)
             return
 
         if intent == "stop":
             stop_show()
 
-            self.send_response("okay, orey-ve-waar")
+            self.send_alexa_response("okay, orey-ve-waar")
             return
 
         if intent == "watched":
@@ -77,11 +100,18 @@ class AlexaSkillEndPoint(BaseHTTPRequestHandler):
             # new_title = ''
             new_title = play_something()
 
-            self.send_response("okay, %s, gone, playing %s" % (title, new_title))
+            self.send_alexa_response("okay, %s, gone, playing %s" % (title, new_title))
             return
 
 
 def run():
+    """
+    start endpoint
+
+    :return:
+            None
+    """
+
     print('starting server...')
 
     # Server settings
