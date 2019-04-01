@@ -17,6 +17,7 @@ class EventLogReader:
     """
     def __init__(self, offset_name):
         self.offset_name = offset_name
+        self.previous_event_dict = None
 
     def start(self):
         """
@@ -51,6 +52,7 @@ class EventLogReader:
                                     offset_file=parameters.EVENT_LOG_PATH + file_name + "." + self.offset_name + ".offset"):
                     event_dict = json.loads(line)
                     self.on_event(event_dict)
+                    self.previous_event_dict = event_dict
 
                 # we finished reading the file, take a break before repeating process
                 time.sleep(5)

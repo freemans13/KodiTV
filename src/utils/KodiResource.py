@@ -10,7 +10,7 @@ class KodiResource(JsonRpcResource):
 
     """
 
-    def pvr_get_channel_details(self, channel_id):
+    def pvr_get_channel_details(self, channel_id, fields=['broadcastnow']):
         """
         Gives channel details for a broadcast
 
@@ -21,7 +21,7 @@ class KodiResource(JsonRpcResource):
         return self.get('PVR.GetChannelDetails',
                         {
                             'channelid': channel_id,
-                            'properties': ['broadcastnow']
+                            'properties': fields
                         },
                         "channeldetails")
 
@@ -82,7 +82,7 @@ class KodiResource(JsonRpcResource):
                         },
                         'broadcasts')
 
-    def player_get_item(self):
+    def player_get_item(self, quiet=False):
         """
         details of current show
 
@@ -172,7 +172,8 @@ class KodiResource(JsonRpcResource):
                                                        "displayorchestra",
                                                        "displaylyricist",
                                                        "userrating"]},
-                        'item')
+                        'item',
+                        quiet=quiet)
 
     def pvr_get_recording_details_batch(self, recording_ids):
         """

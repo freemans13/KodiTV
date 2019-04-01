@@ -1,0 +1,146 @@
+{
+  "date": "2019-03-29 17:37:08",
+  "event": {
+    "jsonrpc": "2.0",
+    "method": "Player.OnAVStart",
+    "params": {
+      "data": {
+        "item": {
+          "channeltype": "tv",
+          "id": 2510,
+          "title": "BBC One Lon",
+          "type": "channel"
+        },
+        "player": {
+          "playerid": 1,
+          "speed": 1
+        }
+      },
+      "sender": "xbmc"
+    }
+  },
+  "data": {
+    "broadcastnext": {
+      "broadcastid": 73392516,
+      "cast": "",
+      "channeluid": 2130595737,
+      "director": "",
+      "endtime": "2019-03-29 18:30:00",
+      "episodename": "",
+      "episodenum": 0,
+      "episodepart": 0,
+      "filenameandpath": "pvr://guide/0189/2019-03-29 18:00:00.epg",
+      "firstaired": "1970-01-01",
+      "genre": [
+        "News",
+        "Current affairs"
+      ],
+      "hasrecording": false,
+      "hastimer": false,
+      "hastimerrule": false,
+      "imdbnumber": "",
+      "isactive": false,
+      "isseries": false,
+      "originaltitle": "",
+      "parentalrating": 0,
+      "plot": "",
+      "plotoutline": "",
+      "progress": 0,
+      "progresspercentage": 0.0,
+      "rating": 0,
+      "recording": "",
+      "runtime": 30,
+      "serieslink": "",
+      "starttime": "2019-03-29 18:00:00",
+      "title": "BBC News at Six",
+      "wasactive": false,
+      "writer": "",
+      "year": 0
+    },
+    "broadcastnow": {
+      "broadcastid": 73395979,
+      "cast": "",
+      "channeluid": 2130595737,
+      "director": "",
+      "endtime": "2019-03-29 18:00:00",
+      "episodename": "",
+      "episodenum": 0,
+      "episodepart": 0,
+      "filenameandpath": "pvr://guide/0189/2019-03-29 17:15:00.epg",
+      "firstaired": "1970-01-01",
+      "genre": [
+        "Movie",
+        "Drama"
+      ],
+      "hasrecording": false,
+      "hastimer": false,
+      "hastimerrule": false,
+      "imdbnumber": "",
+      "isactive": true,
+      "isseries": false,
+      "originaltitle": "",
+      "parentalrating": 0,
+      "plot": "The quiz in which contestants try to score as few points as possible by plumbing the depths of their general knowledge to come up with the answers no-one else could think of. [S]",
+      "plotoutline": "",
+      "progress": 1328,
+      "progresspercentage": 49.185184478759766,
+      "rating": 0,
+      "recording": "",
+      "runtime": 45,
+      "serieslink": "opentv://channel-994ffefe688c1e2a710984a54165d7ba/series-7715",
+      "starttime": "2019-03-29 17:15:00",
+      "title": "Pointless",
+      "wasactive": false,
+      "writer": "",
+      "year": 0
+    },
+    "channel": "BBC One Lon",
+    "channelid": 2510,
+    "channelnumber": 101,
+    "channeltype": "tv",
+    "hidden": false,
+    "icon": "http://stu:n3wj0b@tv.team-freeman.com:9981/imagecache/4428",
+    "isrecording": false,
+    "label": "BBC One Lon",
+    "lastplayed": "2019-03-29",
+    "locked": false,
+    "subchannelnumber": 0,
+    "thumbnail": "image://http%3a%2f%2fstu%3an3wj0b%40tv.team-freeman.com%3a9981%2fimagecache%2f4428/",
+    "uniqueid": 2130595737
+  },
+  "item": {
+    "art": {
+      "thumb": "image://http%3a%2f%2fstu%3an3wj0b%40tv.team-freeman.com%3a9981%2fimagecache%2f4428/"
+    },
+    "cast": "",
+    "channel": "BBC One Lon",
+    "channelnumber": 101,
+    "channeltype": "tv",
+    "director": "",
+    "endtime": "2019-03-29 18:00:00",
+    "fanart": "",
+    "firstaired": "1970-01-01",
+    "genre": [
+      "Movie",
+      "Drama"
+    ],
+    "hidden": false,
+    "id": 2510,
+    "imdbnumber": "",
+    "label": "BBC One Lon",
+    "lastplayed": "2019-03-29",
+    "locked": false,
+    "originaltitle": "",
+    "plot": "The quiz in which contestants try to score as few points as possible by plumbing the depths of their general knowledge to come up with the answers no-one else could think of. [S]",
+    "plotoutline": "",
+    "rating": 0,
+    "runtime": 45,
+    "starttime": "2019-03-29 17:15:00",
+    "thumbnail": "image://http%3a%2f%2fstu%3an3wj0b%40tv.team-freeman.com%3a9981%2fimagecache%2f4428/",
+    "title": "Pointless",
+    "type": "channel",
+    "uniqueid": 2130595737,
+    "writer": "",
+    "year": 0
+  }
+}

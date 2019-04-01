@@ -8,7 +8,7 @@ import datetime
 import json
 from src.utils.KodiResource import KodiResource
 import src.parameters as parameters
-
+import pprint
 
 async def event_listener():
     """
@@ -29,13 +29,45 @@ async def event_listener():
         kodi = KodiResource()
 
         async for message in websocket:
-            event = await websocket.recv()
+            if message == '':
+                print('Skipping empty event')
+                continue
+
             now = datetime.datetime.now()
+            event = json.loads(message)
 
-            event_data = kodi.player_get_item()
+            event_data = event['params']['data'] or {}
+            if 'item' in event_data:
+                event_item = event_data['item'] or {}
+            else:
+                event_item = {}
 
-            row = '{"date": "' + now.strftime("%Y-%m-%d %H:%M:%S") + '", "event": ' + event + ', "item": ' + json.dumps(
-                event_data) + '}'
+            if 'channeltype' in event_item and event_item['channeltype'] == 'tv':
+                data = kodi.pvr_get_channel_details(event_item['id'],
+                                                          ["thumbnail",
+                                                           "channeltype",
+                                                           "hidden",
+                                                           "locked",
+                                                           "channel",
+                                                           "lastplayed",
+                                                           "broadcastnow",
+                                                           "broadcastnext",
+                                                           "uniqueid",
+                                                           "icon",
+                                                           "channelnumber",
+                                                           "subchannelnumber",
+                                                           "isrecording"])
+            else:
+                data = {}
+
+            item = kodi.player_get_item(quiet=True) or {}
+
+            row = json.dumps({
+                "date": now.strftime("%Y-%m-%d %H:%M:%S"),
+                "event": event,
+                "data": data,
+                "item": item
+            })
 
             # calculate name of the file, this row should be saved to,
             # sunday 00:00 of every week
@@ -65,6 +97,6 @@ while True:
     except websockets.exceptions.ConnectionClosed:
         print('Kodi connection closed. Retry in 10 seconds')
         time.sleep(10)
-    # except requests.exceptions.ConnectionError as e:
-    #     print('Kodi connection aborted. Retry in 10 seconds', e)
-    #     time.sleep(10)
+    except requests.exceptions.ConnectionError as e:
+        print('Kodi connection aborted. Retry in 10 seconds', e)
+        time.sleep(10)

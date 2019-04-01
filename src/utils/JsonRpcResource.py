@@ -14,7 +14,7 @@ class JsonRpcResource:
         self.http_url = parameters.KODI_HTTP_URL
         self.web_socket_url = parameters.KODI_WEBSOCKET_URL
 
-    def get(self, method, params, response_key=''):
+    def get(self, method, params, response_key='', quiet=False):
         """
         manages get requests
 
@@ -40,7 +40,7 @@ class JsonRpcResource:
                     return response[response_key]
                 else:
                     return response
-            else:
+            elif not quiet:
                 print('--------------------')
                 print('%s - error response:' % method)
                 pprint(response)
